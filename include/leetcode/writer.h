@@ -73,7 +73,7 @@ public:
     [[maybe_unused]] void write(const T &value, const char *end_with = "\n") {
         std::string buffer;
         internal_write(buffer, value, end_with);
-        out << buffer;
+        out << buffer.data();
     }
 };
 
