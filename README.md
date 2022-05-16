@@ -1,10 +1,10 @@
 # leetcode-formatter
 
-Leetcode-formatter: An input/output formatter designed for Leetcode. This project mainly bring convenience to developer who use leetcode, runtime efficiency is not our design goal.
+Leetcode-formatter: An input/output formatter designed for Leetcode. The purpose of the project is to bring convenience to developer who use leetcode, runtime efficiency is not our design goal.
 
 ## Compatibility
 
-Leetcode-formatter is developed under C++ 20, compatible with GCC (>=9.0), MSVC (>=v143) and Clang (>=10).
+Leetcode-formatter is developed under C++ 20, compatible with GCC (>= 10), MSVC (>= v143) and Clang (>= 10).
 
 ## Quick Start
 
@@ -84,7 +84,7 @@ vector<vector<int>> vector2d;
 vector<int> vector1d;
 int x;
 
-in.read(vector2d);  // stdin: [1, 2, 3],    stderr: "format error: read(std::vector<int>)"
-in.read(vector1d);  // stdin: [1, "2", 3],  stderr: "format error: read(std::vector<int>)"
+in.read(vector2d);  // stdin: [1, 2, 3],    stderr: "format error: read(std::vector<T>)"
+in.read(vector1d);  // stdin: [1, "2", 3],  stderr: "format error: read(std::vector<T>)"
 in.read(x);         // stdin: "hello",      stderr: "format error: read(int)"
 ```
