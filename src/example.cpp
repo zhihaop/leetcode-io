@@ -13,6 +13,7 @@ int main(int argc, char **argv) {
     float f;
 
     Reader in;
+    in.read(vector2d);      // stdin: [[1,2],[2,3],[3,4]]
     in.read(vector1d);      // stdin: ["items","goods","c++"]
     in.read(s);             // stdin: "a string"
     in.read(f);             // stdin: 1.234567

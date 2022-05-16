@@ -84,7 +84,7 @@ vector<vector<int>> vector2d;
 vector<int> vector1d;
 int x;
 
-in.read(vector2d);  // stdin: [1, 2, 3],    stderr: "format error: read(std::vector<T>)"
-in.read(vector1d);  // stdin: [1, "2", 3],  stderr: "format error: read(std::vector<T>)"
+in.read(vector2d);  // stdin: [1, 2, 3],    stderr: "format error: read(std::vector<std::vector<int>>)"
+in.read(vector1d);  // stdin: [1, "2", 3],  stderr: "format error: read(std::vector<int>)"
 in.read(x);         // stdin: "hello",      stderr: "format error: read(int)"
 ```

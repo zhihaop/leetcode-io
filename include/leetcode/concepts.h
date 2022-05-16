@@ -11,29 +11,39 @@ namespace detail {
     template<typename T>
     concept Number = std::is_arithmetic<T>::value;
 
-    [[maybe_unused]] inline std::string name(char value) {
+    template<typename T>
+    [[maybe_unused]] inline std::string name() {
+        return "unknown";
+    }
+
+    template<>
+    [[maybe_unused]] inline std::string name<char>() {
         return "char";
     }
 
-    [[maybe_unused]] inline std::string name(int value) {
+    template<>
+    [[maybe_unused]] inline std::string name<int>() {
         return "int";
     }
 
-    [[maybe_unused]] inline std::string name(float value) {
+    template<>
+    [[maybe_unused]] inline std::string name<float>() {
         return "float";
     }
 
-    [[maybe_unused]] inline std::string name(double value) {
+    template<>
+    [[maybe_unused]] inline std::string name<double>() {
         return "double";
     }
 
     template<class T>
     requires Vector<T>
-    [[maybe_unused]] inline std::string name(const T &value) {
-        return "std::vector<T>";
+    [[maybe_unused]] inline std::string name() {
+        return "std::vector<" + detail::name<typename T::value_type>() + ">";
     }
 
-    [[maybe_unused]] inline std::string name(const std::string &value) {
+    template<>
+    [[maybe_unused]] inline std::string name<std::string>() {
         return "std::string";
     }
 }
