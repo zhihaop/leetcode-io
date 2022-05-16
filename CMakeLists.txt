@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(leetcode_formatter VERSION 0.2.0)
+project(leetcode_formatter VERSION 0.2.1)
 
 set(CMAKE_CXX_STANDARD 20)
 

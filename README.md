@@ -31,6 +31,26 @@ out.write(s);           // stdout: "a string"
 out.write(f);           // stdout: 1.234567
 ```
 
+### Binding std::iostream
+
+```c++
+#include <leetcode/iostream.h>
+...
+
+vector<vector<int>> v;
+string s;
+
+cin >> v;               // stdin: [[],[2,3],[3,4]]
+cout << v << endl;      // stdout: [[],[2,3],[3,4]]
+
+cin >> s;               // stdin: "hello world"
+cout << s << endl;      // stdout: "hello world"
+
+if (s == "hello world") {
+    cout << "ok!\n";    // stdout: ok!
+}
+```
+
 ### Read from file
 
 #### data.in

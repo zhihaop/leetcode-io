@@ -9,7 +9,7 @@ class Reader {
     std::istream &in;
 
     /**
-     * skip all the blank characters in input stream.
+     * skip all the blank characters in the input stream.
      */
     inline void skip_blank() {
         int ch;
@@ -24,7 +24,7 @@ class Reader {
     }
 
     /**
-     * read a number (int, float, double) from input stream.
+     * read a number (int, float, double) from the input stream.
      *
      * @tparam T        int, float or double.
      * @param value     lvalue reference of the value.
@@ -38,7 +38,7 @@ class Reader {
     };
 
     /**
-     * read a string from input stream.
+     * read a std::string from the input stream.
      *
      * @param input     lvalue reference of the string.
      * @return          if read success, returns true.
@@ -64,7 +64,7 @@ class Reader {
     };
 
     /**
-     * read a vector from input stream.
+     * read a std::vector from the input stream.
      *
      * @tparam T        T is a std::vector.
      * @param input     lvalue reference of the vector.
@@ -72,6 +72,46 @@ class Reader {
      */
     template<typename T>
     requires detail::Vector<T>
+    [[maybe_unused]] bool internal_read(T &input) {
+        char ch;
+
+        in >> ch;
+        if (ch != '[') {
+            return false;
+        }
+
+        T result{};
+        for (;;) {
+            skip_blank();
+
+            // decide whether to read the next item.
+            if (in.peek() == ']') {
+                in.get();
+                break;
+            } else if (in.peek() == ',') {
+                in.get();
+            }
+
+            typename T::value_type value{};
+            if (!internal_read(value)) {
+                return false;
+            }
+
+            result.emplace_back(std::move(value));
+        }
+        input = std::move(result);
+        return true;
+    }
+
+    /**
+    * read a std::map from the input stream.
+    *
+    * @tparam T        T is a std::vector.
+    * @param input     lvalue reference of the vector.
+    * @return          if read success, returns true.
+    */
+    template<typename T>
+    requires detail::Map<T>
     [[maybe_unused]] bool internal_read(T &input) {
         char ch;
 

@@ -1,10 +1,14 @@
 #ifndef LEETCODE_CONCEPTS_H
 #define LEETCODE_CONCEPTS_H
 
+#include <map>
 #include <vector>
 #include <type_traits>
 
 namespace detail {
+    template<typename T>
+    concept Map = std::is_same_v<T, std::map<typename T::key_type, typename T::value_type>>;
+
     template<typename T>
     concept Vector = std::is_same_v<T, std::vector<typename T::value_type>>;
 
@@ -27,6 +31,16 @@ namespace detail {
     }
 
     template<>
+    [[maybe_unused]] inline std::string name<long>() {
+        return "long";
+    }
+
+    template<>
+    [[maybe_unused]] inline std::string name<long long>() {
+        return "long long";
+    }
+
+    template<>
     [[maybe_unused]] inline std::string name<float>() {
         return "float";
     }
@@ -34,6 +48,11 @@ namespace detail {
     template<>
     [[maybe_unused]] inline std::string name<double>() {
         return "double";
+    }
+
+    template<>
+    [[maybe_unused]] inline std::string name<long double>() {
+        return "long double";
     }
 
     template<class T>

@@ -8,7 +8,7 @@ class Writer {
     std::ostream &out;
 
     /**
-     * write the value to buf.
+     * write the value to the buf.
      *
      * @param T         std::vector<?>.
      * @param buf       actually it is a std::string.
@@ -31,7 +31,7 @@ class Writer {
     }
 
     /**
-     * write the value to buf.
+     * write the value to the buf.
      *
      * @param T         int, float or double.
      * @param buf       actually it is a std::string.
@@ -46,7 +46,7 @@ class Writer {
     };
 
     /**
-     * write the value to buf.
+     * write the value to the buf.
      *
      * @param buf       actually it is a std::string.
      * @param value     const lvalue reference of the value.
@@ -63,7 +63,7 @@ public:
     explicit Writer(std::ostream &out = std::cout) : out(out) {}
 
     /**
-     * write the value to output stream.
+     * write the value to the output stream.
      *
      * @tparam T        any type supported by the Writer.
      * @param value     const lvalue reference of the value.
