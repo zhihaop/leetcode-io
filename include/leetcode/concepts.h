@@ -7,18 +7,19 @@
 
 namespace detail {
     template<typename T>
-    concept Map = std::is_same_v<T, std::map<typename T::key_type, typename T::value_type>>;
+    concept Map = std::is_same_v<T, std::map<typename T::key_type, typename T::value_type::second_type>>;
 
     template<typename T>
     concept Vector = std::is_same_v<T, std::vector<typename T::value_type>>;
 
     template<typename T>
-    concept Number = std::is_arithmetic<T>::value;
-
-    template<typename T>
     [[maybe_unused]] inline std::string name() {
         return "unknown";
     }
+
+    // forward declaration to resolve dependency issues
+    template<class T> requires Map<T> inline std::string name();
+    template<class T> requires Vector<T> inline std::string name();
 
     template<>
     [[maybe_unused]] inline std::string name<char>() {
@@ -53,6 +54,12 @@ namespace detail {
     template<>
     [[maybe_unused]] inline std::string name<long double>() {
         return "long double";
+    }
+
+    template<class T>
+    requires Map<T>
+    [[maybe_unused]] inline std::string name() {
+        return "std::map<" + detail::name<typename T::key_type>() + "," +  detail::name<typename T::value_type::second_type>() + ">";
     }
 
     template<class T>

@@ -5,8 +5,13 @@
 #include "leetcode/reader.h"
 #include "leetcode/writer.h"
 
+namespace detail {
+    template<typename T>
+    concept Supported = Vector<T> || Map<T>;
+}
+
 template<typename T>
-requires detail::Vector<T>
+requires detail::Supported<T>
 [[maybe_unused]] std::istream& operator >> (std::istream& is, T &value) {
     Reader reader(is);
     reader.read(value);
@@ -14,7 +19,7 @@ requires detail::Vector<T>
 }
 
 template<typename T>
-requires detail::Vector<T>
+requires detail::Supported<T>
 [[maybe_unused]] std::ostream& operator << (std::ostream& out, const T &value) {
     Writer writer(out);
     writer.write(value, "");

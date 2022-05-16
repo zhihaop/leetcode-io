@@ -24,14 +24,13 @@ class Reader {
     }
 
     /**
-     * read a number (int, float, double) from the input stream.
+     * read value from the input stream.
      *
-     * @tparam T        int, float or double.
+     * @tparam T        types that support std::iostream.
      * @param value     lvalue reference of the value.
      * @return          if read success, returns true.
      */
     template<class T>
-    requires detail::Number<T>
     [[maybe_unused]] bool internal_read(T &value) {
         in >> value;
         return !in.fail();
@@ -106,8 +105,8 @@ class Reader {
     /**
     * read a std::map from the input stream.
     *
-    * @tparam T        T is a std::vector.
-    * @param input     lvalue reference of the vector.
+    * @tparam T        T is a std::map.
+    * @param input     lvalue reference of the map.
     * @return          if read success, returns true.
     */
     template<typename T>
@@ -116,7 +115,7 @@ class Reader {
         char ch;
 
         in >> ch;
-        if (ch != '[') {
+        if (ch != '{') {
             return false;
         }
 
@@ -125,19 +124,28 @@ class Reader {
             skip_blank();
 
             // decide whether to read the next item.
-            if (in.peek() == ']') {
+            if (in.peek() == '}') {
                 in.get();
                 break;
             } else if (in.peek() == ',') {
                 in.get();
             }
 
-            typename T::value_type value{};
-            if (!internal_read(value)) {
+            typename T::key_type key{};
+            if (!internal_read(key)) {
                 return false;
             }
 
-            result.emplace_back(std::move(value));
+            in >> ch;
+            if (ch != ':') {
+                return false;
+            }
+
+            typename T::value_type::second_type value{};
+            if (!internal_read(value)) {
+                return false;
+            }
+            result[key] = value;
         }
         input = std::move(result);
         return true;

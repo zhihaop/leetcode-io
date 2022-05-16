@@ -10,6 +10,31 @@ class Writer {
     /**
      * write the value to the buf.
      *
+     * @param T         std::map<?, ?>.
+     * @param buf       actually it is a std::string.
+     * @param value     const lvalue reference of the value.
+     * @param end_with  append `end_with` to the end of output.
+     */
+    template<typename T>
+    requires detail::Map<T>
+    [[maybe_unused]] static void internal_write(std::string &buf, const T &value, const char *end_with = "\n") {
+        buf += '{';
+        size_t count = 0;
+        for (auto it = value.begin(); it != value.end(); ++it, ++count) {
+            internal_write(buf, it->first, "");
+            buf += ':';
+            internal_write(buf, it->second, "");
+            if (count + 1 != value.size()) {
+                buf += ',';
+            }
+        }
+        buf += '}';
+        buf += end_with;
+    }
+
+    /**
+     * write the value to the buf.
+     *
      * @param T         std::vector<?>.
      * @param buf       actually it is a std::string.
      * @param value     const lvalue reference of the value.
@@ -33,13 +58,12 @@ class Writer {
     /**
      * write the value to the buf.
      *
-     * @param T         int, float or double.
+     * @param T         types that support std::iostream.
      * @param buf       actually it is a std::string.
      * @param value     const lvalue reference of the value.
      * @param end_with  append `end_with` to the end of output.
      */
     template<class T>
-    requires detail::Number<T>
     [[maybe_unused]] static void internal_write(std::string &buf, const T &value, const char *end_with = "\n") {
         buf += std::to_string(value);
         buf += end_with;
