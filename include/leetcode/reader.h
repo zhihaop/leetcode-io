@@ -151,6 +151,47 @@ class Reader {
         return true;
     }
 
+    /**
+    * read a std::pair from the input stream.
+    *
+    * @tparam T        T is a std::pair.
+    * @param input     lvalue reference of the map.
+    * @return          if read success, returns true.
+    */
+    template<typename T>
+    requires detail::Pair<T>
+    [[maybe_unused]] bool internal_read(T &input) {
+        char ch;
+
+        in >> ch;
+        if (ch != '(') {
+            return false;
+        }
+
+        typename T::first_type key{};
+        if (!internal_read(key)) {
+            return false;
+        }
+
+        in >> ch;
+        if (ch != ',') {
+            return false;
+        }
+
+        typename T::second_type value{};
+        if (!internal_read(value)) {
+            return false;
+        }
+
+        in >> ch;
+        if (ch != ')') {
+            return false;
+        }
+
+        input = std::make_pair(std::move(key), std::move(value));
+        return true;
+    }
+
 public:
     explicit Reader(std::istream &in = std::cin) : in(in) {}
 

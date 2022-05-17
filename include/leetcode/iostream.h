@@ -7,7 +7,7 @@
 
 namespace detail {
     template<typename T>
-    concept Supported = Vector<T> || Map<T>;
+    concept Supported = Vector<T> || Map<T> || Pair<T>;
 }
 
 template<typename T>

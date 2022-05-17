@@ -58,6 +58,24 @@ class Writer {
     /**
      * write the value to the buf.
      *
+     * @param T         std::pair<?, ?>.
+     * @param buf       actually it is a std::pair.
+     * @param value     const lvalue reference of the value.
+     * @param end_with  append `end_with` to the end of output.
+     */
+    template<typename T>
+    requires detail::Pair<T>
+    [[maybe_unused]] static void internal_write(std::string &buf, const T &value, const char *end_with = "\n") {
+        buf += '(';
+        internal_write(buf, value.first, ",");
+        internal_write(buf, value.second, "");
+        buf += ')';
+        buf += end_with;
+    }
+
+    /**
+     * write the value to the buf.
+     *
      * @param T         types that support std::iostream.
      * @param buf       actually it is a std::string.
      * @param value     const lvalue reference of the value.
