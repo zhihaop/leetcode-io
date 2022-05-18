@@ -31,6 +31,7 @@ class Reader {
      * @return          if read success, returns true.
      */
     template<class T>
+    requires (!detail::Container<T>)
     [[maybe_unused]] bool internal_read(T &value) {
         in >> value;
         return !in.fail();
@@ -152,43 +153,40 @@ class Reader {
     }
 
     /**
-    * read a std::pair from the input stream.
+    * read a std::pair || std::array || std::tuple from the input stream.
     *
-    * @tparam T        T is a std::pair.
+    * @tparam T        T is a std::pair || std::array || std::tuple.
     * @param input     lvalue reference of the map.
     * @return          if read success, returns true.
     */
-    template<typename T>
-    requires detail::Pair<T>
+    template<typename T, size_t X = 0>
+    requires detail::Pair<T> || detail::Array<T> || detail::Tuple<T>
     [[maybe_unused]] bool internal_read(T &input) {
         char ch;
-
-        in >> ch;
-        if (ch != '(') {
-            return false;
+        if constexpr(X == 0) {
+            in >> ch;
+            if (ch != '(') {
+                return false;
+            }
         }
 
-        typename T::first_type key{};
-        if (!internal_read(key)) {
-            return false;
-        }
-
-        in >> ch;
-        if (ch != ',') {
-            return false;
-        }
-
-        typename T::second_type value{};
-        if (!internal_read(value)) {
-            return false;
+        if constexpr(X < std::tuple_size<T>::value) {
+            if (!internal_read(std::get<X>(input))) {
+                return false;
+            }
         }
 
         in >> ch;
-        if (ch != ')') {
+        if constexpr(X + 1 < std::tuple_size<T>::value) {
+            if (ch != ',') {
+                return false;
+            }
+            if (!internal_read<T, X + 1>(input)) {
+                return false;
+            }
+        } else if (ch != ')') {
             return false;
         }
-
-        input = std::make_pair(std::move(key), std::move(value));
         return true;
     }
 

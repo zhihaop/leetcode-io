@@ -5,36 +5,32 @@
 #include "leetcode/reader.h"
 #include "leetcode/writer.h"
 
-namespace detail {
-    template<typename T>
-    concept Supported = Vector<T> || Map<T> || Pair<T>;
-}
-
 template<typename T>
-requires detail::Supported<T>
-[[maybe_unused]] std::istream& operator >> (std::istream& is, T &value) {
+requires detail::Container<T>
+[[maybe_unused]] std::istream &operator>>(std::istream &is, T &value) {
     Reader reader(is);
     reader.read(value);
     return is;
 }
 
 template<typename T>
-requires detail::Supported<T>
-[[maybe_unused]] std::ostream& operator << (std::ostream& out, const T &value) {
+requires detail::Container<T>
+[[maybe_unused]] std::ostream &operator<<(std::ostream &out, const T &value) {
     Writer writer(out);
     writer.write(value, "");
     return out;
 }
 
-[[maybe_unused]] std::istream& operator >> (std::istream& is, std::string &value) {
+[[maybe_unused]] std::istream &operator>>(std::istream &is, std::string &value) {
     Reader reader(is);
     reader.read(value);
     return is;
 }
 
-[[maybe_unused]] std::ostream& operator << (std::ostream& out, std::string &value) {
+[[maybe_unused]] std::ostream &operator<<(std::ostream &out, std::string &value) {
     Writer writer(out);
     writer.write(value, "");
     return out;
 }
+
 #endif //LEETCODE_FORMATTER_IOSTREAM_H

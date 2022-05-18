@@ -10,8 +10,6 @@ Leetcode-formatter is developed under C++ 20, compatible with GCC (>= 10), MSVC 
 
 ### Basic usage
 
-#### source code
-
 ```c++
 vector<vector<int>> vector2d;
 vector<string> vector1d;
