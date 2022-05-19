@@ -27,7 +27,19 @@ requires detail::Container<T>
     return is;
 }
 
-[[maybe_unused]] std::ostream &operator<<(std::ostream &out, std::string &value) {
+[[maybe_unused]] std::istream &operator>>(std::istream &is, char &value) {
+    Reader reader(is);
+    reader.read(value);
+    return is;
+}
+
+[[maybe_unused]] std::ostream &operator<<(std::ostream &out, const std::string &value) {
+    Writer writer(out);
+    writer.write(value, "");
+    return out;
+}
+
+[[maybe_unused]] std::ostream &operator<<(std::ostream &out, const char &value) {
     Writer writer(out);
     writer.write(value, "");
     return out;

@@ -113,6 +113,21 @@ class Writer {
         buf += end_with;
     };
 
+    /**
+     * write the value to the buf.
+     *
+     * @param buf       actually it is a std::string.
+     * @param value     const lvalue reference of the value.
+     * @param end_with  append `end_with` to the end of output.
+     */
+    [[maybe_unused]] static void
+    internal_write(std::string &buf, const char &value, const char *end_with = "\n") {
+        buf += '"';
+        buf += value;
+        buf += '"';
+        buf += end_with;
+    };
+
 public:
     explicit Writer(std::ostream &out = std::cout) : out(out) {}
 

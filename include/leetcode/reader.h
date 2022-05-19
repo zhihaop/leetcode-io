@@ -64,6 +64,33 @@ class Reader {
     };
 
     /**
+     * read a char from the input stream.
+     *
+     * @param input     lvalue reference of the string.
+     * @return          if read success, returns true.
+     */
+    [[maybe_unused]] bool internal_read(char &input) {
+        char ch, result;
+
+        in >> ch;
+        if (ch != '"') {
+            return false;
+        }
+
+        in >> ch;
+        if (ch == '\n' || ch == 0 || ch == -1) return false;
+        result = ch;
+
+        in >> ch;
+        if (ch != '"') {
+            return false;
+        }
+
+        input = result;
+        return true;
+    };
+
+    /**
      * read a std::vector from the input stream.
      *
      * @tparam T        T is a std::vector.
