@@ -4,10 +4,14 @@
 #include <map>
 #include <vector>
 #include <type_traits>
+#include <unordered_map>
 
 namespace detail {
     template<typename T>
     concept Map = std::is_same_v<T, std::map<typename T::key_type, typename T::value_type::second_type>>;
+
+    template<typename T>
+    concept UnorderedMap = std::is_same_v<T, std::unordered_map<typename T::key_type, typename T::value_type::second_type>>;
 
     template<typename T>
     concept Pair = std::is_same_v<T, std::pair<typename T::first_type, typename T::second_type>>;
@@ -22,7 +26,7 @@ namespace detail {
     concept Vector = std::is_same_v<T, std::vector<typename T::value_type>>;
 
     template<typename T>
-    concept Container = Map<T> || Pair<T> || Array<T> || Tuple<T> || Vector<T>;
+    concept Container = UnorderedMap<T> || Map<T> || Pair<T> || Array<T> || Tuple<T> || Vector<T>;
 
     template<typename T>
     [[maybe_unused]] inline std::string name() {
@@ -88,6 +92,13 @@ namespace detail {
     requires Map<T>
     [[maybe_unused]] inline std::string name() {
         return "std::map<" + detail::name<typename T::key_type>() + "," +
+               detail::name<typename T::value_type::second_type>() + ">";
+    }
+
+    template<class T>
+    requires UnorderedMap<T>
+    [[maybe_unused]] inline std::string name() {
+        return "std::unordered_map<" + detail::name<typename T::key_type>() + "," +
                detail::name<typename T::value_type::second_type>() + ">";
     }
 

@@ -16,7 +16,7 @@ class Writer {
      * @param end_with  append `end_with` to the end of output.
      */
     template<typename T>
-    requires detail::Map<T>
+    requires detail::Map<T> || detail::UnorderedMap<T>
     [[maybe_unused]] static void internal_write(std::string &buf, const T &value, const char *end_with = "\n") {
         buf += '{';
         size_t count = 0;

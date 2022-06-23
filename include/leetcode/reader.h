@@ -138,7 +138,7 @@ class Reader {
     * @return          if read success, returns true.
     */
     template<typename T>
-    requires detail::Map<T>
+    requires detail::Map<T> || detail::UnorderedMap<T>
     [[maybe_unused]] bool internal_read(T &input) {
         char ch;
 
