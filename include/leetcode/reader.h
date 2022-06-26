@@ -236,6 +236,25 @@ public:
         return true;
     };
 
+    /**
+     * read multiple values from input stream.
+     *
+     * @tparam T        any type supported by the Reader.
+     * @tparam Args     the following params types.
+     * @param value     lvalue reference of the value.
+     * @param args      the following params.
+     * @return          if read success, returns true.
+     */
+    template<typename T, typename ...Args>
+    [[maybe_unused]] bool read(T &value, Args &...args) {
+        if constexpr(sizeof...(args) > 0) {
+            if (!read(value)) {
+                return false;
+            }
+            return read(args...);
+        }
+        return read(value);
+    };
 };
 
 #endif //LEETCODE_READER_H
