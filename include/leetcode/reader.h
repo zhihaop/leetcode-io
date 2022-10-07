@@ -48,14 +48,21 @@ class Reader {
         std::string result;
 
         in >> ch;
+        bool has_quote = true;
         if (ch != '"') {
-            return false;
+            has_quote = false;
+            result += ch;
         }
 
         for (;;) {
             ch = static_cast<char>(in.get());
-            if (ch == '\n' || ch == 0 || ch == -1) return false;
-            if (ch == '"') break;
+            if (has_quote) {
+                if (ch == '\n' || ch == 0 || ch == -1) return false;
+                if (ch == '"') break;
+            } else {
+                if (ch == 0 || ch == -1) return false;
+                if (ch == ' ' || ch == '\n') break;
+            }
             result += ch;
         }
 

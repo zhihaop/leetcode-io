@@ -107,9 +107,7 @@ class Writer {
      */
     [[maybe_unused]] static void
     internal_write(std::string &buf, const std::string &value, const char *end_with = "\n") {
-        buf += '"';
         buf += value;
-        buf += '"';
         buf += end_with;
     };
 
@@ -122,9 +120,7 @@ class Writer {
      */
     [[maybe_unused]] static void
     internal_write(std::string &buf, const char &value, const char *end_with = "\n") {
-        buf += '"';
         buf += value;
-        buf += '"';
         buf += end_with;
     };
 
