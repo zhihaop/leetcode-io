@@ -197,21 +197,21 @@ class Reader {
     requires detail::Pair<T> || detail::Array<T> || detail::Tuple<T>
     [[maybe_unused]] bool internal_read(T &input) {
         char ch;
-        if constexpr(X == 0) {
+        if constexpr (X == 0) {
             in >> ch;
             if (ch != '(') {
                 return false;
             }
         }
 
-        if constexpr(X < std::tuple_size<T>::value) {
+        if constexpr (X < std::tuple_size<T>::value) {
             if (!internal_read(std::get<X>(input))) {
                 return false;
             }
         }
 
         in >> ch;
-        if constexpr(X + 1 < std::tuple_size<T>::value) {
+        if constexpr (X + 1 < std::tuple_size<T>::value) {
             if (ch != ',') {
                 return false;
             }
@@ -220,6 +220,24 @@ class Reader {
             }
         } else if (ch != ')') {
             return false;
+        }
+        return true;
+    }
+
+    /**
+    * read a List from input.
+    *
+    * @param input     lvalue reference of the List.
+    * @return          if read success, returns true.
+    */
+    [[maybe_unused]] bool internal_read(List &input) {
+        std::vector<int> buffer;
+        if (!internal_read(buffer)) {
+            return false;
+        }
+        std::reverse(buffer.begin(), buffer.end());
+        for (int &x: buffer) {
+            input.emplace_front(x);
         }
         return true;
     }
@@ -254,7 +272,7 @@ public:
      */
     template<typename T, typename ...Args>
     [[maybe_unused]] bool read(T &value, Args &...args) {
-        if constexpr(sizeof...(args) > 0) {
+        if constexpr (sizeof...(args) > 0) {
             if (!read(value)) {
                 return false;
             }

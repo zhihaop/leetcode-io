@@ -1,6 +1,8 @@
 #ifndef LEETCODE_CONCEPTS_H
 #define LEETCODE_CONCEPTS_H
 
+#include "list.h"
+
 #include <map>
 #include <vector>
 #include <type_traits>
@@ -56,6 +58,11 @@ namespace detail {
     template<>
     [[maybe_unused]] inline std::string name<char>() {
         return "char";
+    }
+
+    template<>
+    [[maybe_unused]] inline std::string name<List>() {
+        return "List";
     }
 
     template<>

@@ -66,15 +66,15 @@ class Writer {
     template<typename T, size_t X = 0>
     requires detail::Pair<T> || detail::Tuple<T> || detail::Array<T>
     [[maybe_unused]] static void internal_write(std::string &buf, const T &value, const char *end_with = "\n") {
-        if constexpr(X == 0) {
+        if constexpr (X == 0) {
             buf += '(';
         }
 
-        if constexpr(X < std::tuple_size<T>::value) {
+        if constexpr (X < std::tuple_size<T>::value) {
             internal_write(buf, std::get<X>(value), "");
         }
 
-        if constexpr(X + 1 < std::tuple_size<T>::value) {
+        if constexpr (X + 1 < std::tuple_size<T>::value) {
             buf += ",";
             internal_write<T, X + 1>(buf, value, end_with);
         } else {
@@ -122,6 +122,38 @@ class Writer {
     internal_write(std::string &buf, const char &value, const char *end_with = "\n") {
         buf += value;
         buf += end_with;
+    };
+
+    /**
+     * write the value to the buf.
+     *
+     * @param buf       actually it is a std::string.
+     * @param value     const lvalue reference of the value.
+     * @param end_with  append `end_with` to the end of output.
+     */
+    [[maybe_unused]] static void
+    internal_write(std::string &buf, const ListNode *node, const char *end_with = "\n") {
+        buf += "[";
+        for (auto iter = node; iter; iter = iter->next) {
+            buf += std::to_string(iter->val);
+            if (iter->next) {
+                buf += ",";
+            }
+        }
+        buf += "]";
+        buf += end_with;
+    };
+
+    /**
+     * write the value to the buf.
+     *
+     * @param buf       actually it is a std::string.
+     * @param value     const lvalue reference of the value.
+     * @param end_with  append `end_with` to the end of output.
+     */
+    [[maybe_unused]] static void
+    internal_write(std::string &buf, const List &l, const char *end_with = "\n") {
+        internal_write(buf, l.head(), end_with);
     };
 
 public:

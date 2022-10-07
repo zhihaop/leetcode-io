@@ -33,16 +33,22 @@ requires detail::Container<T>
     return is;
 }
 
-[[maybe_unused]] std::ostream &operator<<(std::ostream &out, const std::string &value) {
+[[maybe_unused]] std::istream &operator>>(std::istream &is, List &value) {
+    Reader reader(is);
+    reader.read(value);
+    return is;
+}
+
+[[maybe_unused]] std::ostream &operator<<(std::ostream &out, const ListNode *node) {
     Writer writer(out);
-    writer.write(value, "");
+    writer.write(node, "");
     return out;
 }
 
-[[maybe_unused]] std::ostream &operator<<(std::ostream &out, const char &value) {
+[[maybe_unused]] std::ostream &operator<<(std::ostream &out, const List &l) {
     Writer writer(out);
-    writer.write(value, "");
+    writer.write(l, "");
     return out;
 }
 
-#endif //LEETCODE_FORMATTER_IOSTREAM_H
+#endif //LEETCODE_IOSTREAM_H
