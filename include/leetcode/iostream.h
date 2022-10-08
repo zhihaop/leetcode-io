@@ -33,7 +33,7 @@ requires detail::Container<T>
     return is;
 }
 
-[[maybe_unused]] std::istream &operator>>(std::istream &is, List &value) {
+[[maybe_unused]] std::istream &operator>>(std::istream &is, ForwardList &value) {
     Reader reader(is);
     reader.read(value);
     return is;
@@ -45,7 +45,7 @@ requires detail::Container<T>
     return out;
 }
 
-[[maybe_unused]] std::ostream &operator<<(std::ostream &out, const List &l) {
+[[maybe_unused]] std::ostream &operator<<(std::ostream &out, const ForwardList &l) {
     Writer writer(out);
     writer.write(l, "");
     return out;
