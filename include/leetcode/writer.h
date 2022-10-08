@@ -134,13 +134,14 @@ class Writer {
     [[maybe_unused]] static void
     internal_write(std::string &buf, const ListNode *node, const char *end_with = "\n") {
         buf += "[";
-        for (auto iter = node; ; iter = iter->next) {
+        auto iter = node;
+        while (node) {
             buf += std::to_string(iter->val);
-            if (iter->next != nullptr && iter->next != node) {
-                buf += ",";
-            } else {
+            iter = iter->next;
+            if (!iter || iter == node) {
                 break;
             }
+            buf += ",";
         }
         buf += "]";
         buf += end_with;

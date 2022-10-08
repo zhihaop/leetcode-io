@@ -21,15 +21,24 @@ struct ListNode {
 using Node = ListNode;
 
 class List {
-    std::deque<ListNode> allocator;
     ListNode *m_head{};
 public:
     List() = default;
 
     List(const List &l) = delete;
 
-    List(List &&l) noexcept: allocator(std::move(l.allocator)), m_head(l.m_head) {
+    List(List &&l) noexcept: m_head(l.m_head) {
         l.m_head = nullptr;
+    }
+
+    ~List() {
+        if (!m_head) return;
+        auto node = m_head;
+        do {
+            auto next = node->next;
+            delete node;
+            node = next;
+        } while (node != m_head && node);
     }
 
     [[nodiscard]] ListNode *head() { return m_head; }
@@ -61,13 +70,13 @@ public:
 
     void emplace_front(int value) {
         if (!m_head) {
-            m_head = &allocator.emplace_back();
+            m_head = new ListNode();
             m_head->val = value;
             return;
         }
 
         auto h = m_head;
-        m_head = &allocator.emplace_back();
+        m_head = new ListNode();
         m_head->next = h;
         m_head->val = value;
     }
