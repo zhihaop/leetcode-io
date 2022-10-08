@@ -3,6 +3,7 @@
 
 #include <deque>
 
+
 /**
  * Leetcode ListNode definition.
  */
@@ -16,6 +17,8 @@ struct ListNode {
 
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
+
+using Node = ListNode;
 
 class List {
     std::deque<ListNode> allocator;
@@ -32,6 +35,29 @@ public:
     [[nodiscard]] ListNode *head() { return m_head; }
 
     [[nodiscard]] const ListNode *head() const { return m_head; }
+
+    [[nodiscard]] ListNode * tail() {
+        auto node = m_head;
+        while (node) {
+            if (!node->next || node->next == m_head) return node;
+            node = node->next;
+        }
+        return node;
+    }
+
+    [[nodiscard]] const ListNode * tail() const {
+        auto node = m_head;
+        while (node) {
+            if (!node->next || node->next == m_head) return node;
+            node = node->next;
+        }
+        return node;
+    }
+
+    void cycling() {
+        auto t = tail();
+        if (t)  t->next = head();
+    }
 
     void emplace_front(int value) {
         if (!m_head) {
