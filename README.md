@@ -1,10 +1,10 @@
-# leetcode-formatter
+# Leetcode-io
 
-Leetcode-formatter: An input/output formatter designed for Leetcode. The purpose of the project is to bring convenience to developer who use leetcode, runtime efficiency is not our design goal.
+Leetcode-io: An Leetcode input/output utilities. The purpose of the project is to bring convenience to user who use leetcode, runtime efficiency is not our design goal.
 
 ## Compatibility
 
-Leetcode-formatter is developed under C++ 20, compatible with GCC (>= 10), MSVC (>= v143) and Clang (>= 10).
+Leetcode-io is developed under C++ 20, compatible with GCC (>= 10), MSVC (>= v143) and Clang (>= 10).
 
 ## Quick Start
 

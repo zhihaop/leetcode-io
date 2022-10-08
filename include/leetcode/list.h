@@ -1,5 +1,5 @@
-#ifndef LEETCODE_FORMATTER_LIST_H
-#define LEETCODE_FORMATTER_LIST_H
+#ifndef LEETCODE_LIST_H
+#define LEETCODE_LIST_H
 
 #include <deque>
 
@@ -73,4 +73,4 @@ public:
     }
 };
 
-#endif //LEETCODE_FORMATTER_LIST_H
+#endif //LEETCODE_LIST_H

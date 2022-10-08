@@ -1,5 +1,5 @@
-#ifndef LEETCODE_FORMATTER_DEBUGS_H
-#define LEETCODE_FORMATTER_DEBUGS_H
+#ifndef LEETCODE_DEBUGS_H
+#define LEETCODE_DEBUGS_H
 
 #include "reader.h"
 #include <sstream>
@@ -12,4 +12,4 @@ void from_string(const std::string &s, Args &...args) {
     reader.read(args...);
 }
 
-#endif //LEETCODE_FORMATTER_DEBUGS_H
+#endif //LEETCODE_DEBUGS_H
