@@ -155,7 +155,7 @@ class Writer {
      * @param end_with  append `end_with` to the end of output.
      */
     [[maybe_unused]] static void
-    internal_write(std::string &buf, const List &l, const char *end_with = "\n") {
+    internal_write(std::string &buf, const ForwardList &l, const char *end_with = "\n") {
         internal_write(buf, l.head(), end_with);
     };
 

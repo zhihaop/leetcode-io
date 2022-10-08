@@ -59,12 +59,7 @@ namespace detail {
     [[maybe_unused]] inline std::string name<char>() {
         return "char";
     }
-
-    template<>
-    [[maybe_unused]] inline std::string name<List>() {
-        return "List";
-    }
-
+    
     template<>
     [[maybe_unused]] inline std::string name<int>() {
         return "int";
@@ -94,7 +89,12 @@ namespace detail {
     [[maybe_unused]] inline std::string name<long double>() {
         return "long double";
     }
-
+    
+    template<>
+    [[maybe_unused]] inline std::string name<ForwardList>() {
+        return "ForwardList";
+    }
+    
     template<class T>
     requires Map<T>
     [[maybe_unused]] inline std::string name() {

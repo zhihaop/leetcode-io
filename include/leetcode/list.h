@@ -1,37 +1,34 @@
 #ifndef LEETCODE_LIST_H
 #define LEETCODE_LIST_H
 
-#include <deque>
-
-
 /**
  * Leetcode ListNode definition.
  */
 struct ListNode {
-    int val;
-    ListNode *next;
+    int val{};
+    ListNode *next{};
 
-    ListNode() : val(0), next(nullptr) {}
+    ListNode() = default;
 
-    explicit ListNode(int x) : val(x), next(nullptr) {}
+    [[maybe_unused]] explicit ListNode(int x) : val(x), next(nullptr) {}
 
-    ListNode(int x, ListNode *next) : val(x), next(next) {}
+    [[maybe_unused]] ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
 using Node = ListNode;
 
-class List {
+class ForwardList {
     ListNode *m_head{};
 public:
-    List() = default;
+    ForwardList() = default;
 
-    List(const List &l) = delete;
+    ForwardList(const ForwardList &l) = delete;
 
-    List(List &&l) noexcept: m_head(l.m_head) {
+    ForwardList(ForwardList &&l) noexcept: m_head(l.m_head) {
         l.m_head = nullptr;
     }
 
-    ~List() {
+    ~ForwardList() {
         if (!m_head) return;
         auto node = m_head;
         do {
@@ -45,7 +42,7 @@ public:
 
     [[nodiscard]] const ListNode *head() const { return m_head; }
 
-    [[nodiscard]] ListNode * tail() {
+    [[nodiscard]] ListNode *tail() {
         auto node = m_head;
         while (node) {
             if (!node->next || node->next == m_head) return node;
@@ -54,7 +51,7 @@ public:
         return node;
     }
 
-    [[nodiscard]] const ListNode * tail() const {
+    [[nodiscard]] const ListNode *tail() const {
         auto node = m_head;
         while (node) {
             if (!node->next || node->next == m_head) return node;
@@ -63,9 +60,20 @@ public:
         return node;
     }
 
-    void cycling() {
+    /**
+     * Make the forward list become a circular forward list
+     */
+    [[maybe_unused]] void cycling() {
         auto t = tail();
-        if (t)  t->next = head();
+        if (t) t->next = head();
+    }
+
+    /**
+     * Undo the ForwardList::cycling() operation.
+     */
+    [[maybe_unused]] void undo_cycling() {
+        auto t = tail();
+        if (t) t->next = nullptr;
     }
 
     void emplace_front(int value) {

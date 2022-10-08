@@ -225,12 +225,12 @@ class Reader {
     }
 
     /**
-    * read a List from input.
+    * read a ForwardList from input.
     *
-    * @param input     lvalue reference of the List.
+    * @param input     lvalue reference of the ForwardList.
     * @return          if read success, returns true.
     */
-    [[maybe_unused]] bool internal_read(List &input) {
+    [[maybe_unused]] bool internal_read(ForwardList &input) {
         std::vector<int> buffer;
         if (!internal_read(buffer)) {
             return false;
